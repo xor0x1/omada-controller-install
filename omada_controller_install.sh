@@ -68,7 +68,7 @@ else
   die "Не могу прочитать /etc/os-release"
 fi
 case "${VERSION_CODENAME:-}" in
-  focal|jammy|noble) OS_CODENAME="$VERSION_CODENAME" ;;
+  focal|jammy|noble|oracular) OS_CODENAME="$VERSION_CODENAME" ;;
   *) die "Поддерживаются только Ubuntu 20.04/22.04/24.04";;
 esac
 ARCH="$(dpkg --print-architecture)" # amd64 | arm64 | ...
