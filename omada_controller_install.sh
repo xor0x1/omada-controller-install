@@ -78,16 +78,19 @@ apt-get install -yq --no-install-recommends \
   coreutils grep sed gawk
 
 # ---------------------- MongoDB 8.0 repo ----------------------
-# для Ubuntu 24.10 используем noble
+# Для 24.10 используем репозиторий noble
 MONGO_REPO_CODENAME="$OS_CODENAME"
 if [[ "$OS_CODENAME" == "oracular" ]]; then
-  warn "MongoDB 8.0 для Ubuntu 24.10 отсутствует; используем репозиторий noble (24.04)."
+  warn "MongoDB 8.0 для Ubuntu 24.10: используем репозиторий noble (24.04) в качестве фоллбэка."
   MONGO_REPO_CODENAME="noble"
 fi
 
-echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg] \
-https://repo.mongodb.org/apt/ubuntu ${MONGO_REPO_CODENAME}/mongodb-org/8.0 multiverse" \
-> /etc/apt/sources.list.d/mongodb-org-8.0.list
+log "Добавляю репозиторий MongoDB 8.0 и настраиваю пиннинг"
+curl -fsSL --proto '=https' --tlsv1.2 https://www.mongodb.org/static/pgp/server-8.0.asc \
+  | gpg --dearmor -o /usr/share/keyrings/mongodb-server-8.0.gpg
+
+echo "deb [arch=amd64,arm64 signed-by=/usr/share/keyrings/mongodb-server-8.0.gpg] https://repo.mongodb.org/apt/ubuntu ${MONGO_REPO_CODENAME}/mongodb-org/8.0 multiverse" \
+  > /etc/apt/sources.list.d/mongodb-org-8.0.list
 
 cat >/etc/apt/preferences.d/mongodb-org-8.0.pref <<'PREF'
 Package: mongodb-org*
