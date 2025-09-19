@@ -29,7 +29,7 @@ usage() {
 USAGE
 }
 
-OMADA_URL=""
+OMADA_URL="https://static.tp-link.com/upload/software/2025/202508/20250802/omada_v5.15.24.19_linux_x64_20250724152622.deb"
 OMADA_SHA=""
 UFW_CIDR=""
 
